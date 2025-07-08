@@ -7,23 +7,24 @@ document.getElementById('menu-icon').addEventListener('click', function () {
 // CONTAGEM REGRESSIVA
 function startCountdown() {
   const countdownElement = document.getElementById("countdown");
-  const endDate = new Date("2025-07-16T23:59:59").getTime();
+  const startDate = new Date("2025-07-14T18:00:00").getTime();
 
   function updateCountdown() {
     const now = new Date().getTime();
-    const distance = endDate - now;
+    const distance = startDate - now;
 
-    if (distance < 0) {
+    if (distance <= 0) {
       countdownElement.innerText = "00:00:00";
       return;
     }
 
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     countdownElement.innerText =
-      `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      `${String(days).padStart(2, '0')}d ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
 
   updateCountdown();
@@ -31,41 +32,3 @@ function startCountdown() {
 }
 
 startCountdown();
-
-
-// POP-UP DE PROVA SOCIAL
-const nomes = [
-  "João - BA",
-  "Amanda - BA",
-  "Lucas - BA",
-  "Mariana - BA",
-  "Felipe - BA",
-  "Letícia - BA",
-  "Bruno - BA",
-  "Camila - BA",
-  "Rafael - BA",
-  "Sara - BA"
-];
-
-const mensagens = [
-  "adquiriu a camisa."
-];
-
-
-function mostrarPopup() {
-  const nome = nomes[Math.floor(Math.random() * nomes.length)];
-  const msg = mensagens[Math.floor(Math.random() * mensagens.length)];
-
-  const popup = document.getElementById("popup-notification");
-  const popupText = document.getElementById("popup-text");
-
-  popupText.textContent = `✅ ${nome} ${msg}`;
-  popup.classList.add("show");
-
-  setTimeout(() => {
-    popup.classList.remove("show");
-  }, 6000);
-}
-
-// Exibir popup a cada 15 segundos
-setInterval(mostrarPopup, 15000);
